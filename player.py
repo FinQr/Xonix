@@ -2,38 +2,19 @@ from params import *
 
 
 class Player:
-    # Направления движение
-    directions = {
+    # Смещения для направлений движения
+    dirs_offsets = {
         NONE: (0, 0),
         LEFT: (0, -1),
         RIGHT: (0, 1),
-        TOP: (-1, 0),
+        UP: (-1, 0),
         DOWN: (1, 0)
     }
 
-    # Словарь противоположных направлений
-    op_directions = {
-        NONE: NONE,
-        LEFT: RIGHT,
-        RIGHT: LEFT,
-        TOP: DOWN,
-        DOWN: TOP
-    }
-
     def __init__(self):
-        self.current_dir = 'none'
         self.row = 0
         self.col = 0
+        self.delta_row, self.delta_col = self.dirs_offsets[NONE]
 
-    def move(self):
-        delta_row, delta_col = self.directions[self.current_dir]
-        self.row += delta_row
-        self.col += delta_col
-
-    def op_move(self):
-        delta_row, delta_col = self.directions[self.op_directions[self.current_dir]]
-        self.row += delta_row
-        self.col += delta_col
-
-    def set_current_dir(self, new_dir):
-        self.current_dir = new_dir
+    def set_dir(self, new_dir):
+        self.delta_row, self.delta_col = self.dirs_offsets[new_dir]
