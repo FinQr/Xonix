@@ -12,5 +12,11 @@ while True:
     for event in events:
         if event.type == pygame.QUIT:
             exit(0)
+        if event.type == pygame.KEYDOWN:
+            # Начать движение игрока
+            pass
+        if event.type == pygame.KEYUP:
+            # Прекратить движение игрока
+            pass
 
     clock.tick(FPS)

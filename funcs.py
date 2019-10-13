@@ -13,9 +13,14 @@ def create_board():
 def draw_background(sc, board):
     for row in range(0, ROWS_COUNT):
         for col in range(0, COLS_COUNT):
-            if board[row][col] == 0:
-                color = COLOR_BACK_1 if (row + col) % 2 == 0 else COLOR_BACK_2
-            if board[row][col] == 1:
-                color = COLOR_FRONT_1 if (row + col) % 2 == 0 else COLOR_FRONT_2
+            color = get_color_cell(board, row, col)
             pygame.draw.rect(sc, color, (col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE))
     pygame.display.update()
+
+
+def get_color_cell(board, row, col):
+    if board[row][col] == 0:
+        color = COLOR_BACK_1 if (row + col) % 2 == 0 else COLOR_BACK_2
+    if board[row][col] == 1:
+        color = COLOR_FRONT_1 if (row + col) % 2 == 0 else COLOR_FRONT_2
+    return color
