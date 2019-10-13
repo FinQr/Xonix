@@ -4,7 +4,6 @@ from board import Board
 from params import *
 from pygame.locals import K_DOWN, K_UP, K_LEFT, K_RIGHT
 
-
 # Игрок
 player = None
 
@@ -28,6 +27,9 @@ def game():
     # Создаем новое игровое поле и помещаем на него игрока
     board = Board(player)
 
+    # Отрисовываем игровое поле полностью
+    draw_game_field(0, 0, ROWS_COUNT, COLS_COUNT)
+
     while True:
         events = pygame.event.get()
         for event in events:
@@ -46,16 +48,24 @@ def game():
         # Смещаем игрока и врагов
         board.next_position()
 
-        # Отрисовываем поле
-        draw_game_field()
+        # Отрисовываем игрока
+        draw_game_field(player.row - 1, player.col - 1, player.row + 1, player.col + 1)
 
         clock.tick(FPS)
 
 
 # Отрисовываем игровое поле
-def draw_game_field():
-    for row in range(0, ROWS_COUNT):
-        for col in range(0, COLS_COUNT):
+def draw_game_field(row_0, col_0, row_1, col_1):
+    if row_0 < 0:
+        row_0 = 0
+    if col_0 < 0:
+        col_0 = 0
+    if row_1 >= ROWS_COUNT:
+        row_1 = (ROWS_COUNT - 1)
+    if col_1 >= COLS_COUNT:
+        col_1 = (COLS_COUNT - 1)
+    for row in range(row_0, (row_1 + 1)):
+        for col in range(col_0, (col_1 + 1)):
             color = get_color_cell(row, col)
             pygame.draw.rect(sc, color, (col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE))
     pygame.display.update()

@@ -33,6 +33,6 @@ class Board:
     # Метод проверяет выход за пределы поля
     @staticmethod
     def is_invalid_position(row, col):
-        if (row < 0) or (row > ROWS_COUNT) or (col < 0) or (col > COLS_COUNT):
+        if (row < 0) or (row >= ROWS_COUNT) or (col < 0) or (col >= COLS_COUNT):
             return True
         return False

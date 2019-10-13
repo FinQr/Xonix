@@ -1,4 +1,4 @@
-FPS = 30
+FPS = 60
 
 # Размер одной ячейки
 CELL_SIZE = 5
@@ -21,11 +21,11 @@ PLAYER_CELL = 2
 
 # Цвета фона
 COLOR_BACK_1 = (50, 50, 50)
-COLOR_BACK_2 = (30, 30, 30)
+COLOR_BACK_2 = (40, 40, 40)
 
 # Цвета переднего плана
 COLOR_FRONT_1 = (0, 120, 220)
-COLOR_FRONT_2 = (0, 100, 200)
+COLOR_FRONT_2 = (0, 110, 210)
 
 # Цвет игрока
 COLOR_PLAYER = (255, 20, 20)
