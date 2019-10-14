@@ -22,17 +22,22 @@ def game():
     global player, sparkles, board, sc
 
     pygame.init()
-    pygame.display.set_caption('Pythonix')
     sc = pygame.display.set_mode((SCREEN_W, SCREEN_H))
     clock = pygame.time.Clock()
 
+    # Текущий уровень
+    level = 1
+
     while True:
+        # Формируем заголовок окна
+        pygame.display.set_caption('Pythonix. Level - ' + str(level))
+
         # Создаем нового игрока
         player = Player()
 
         # Создаем врагов
         sparkles = []
-        for i in range(0, 1):
+        for i in range(0, level):
             sparkles.append(Sparkle())
 
         # Создаем новое игровое поле и помещаем на него игрока
@@ -72,7 +77,11 @@ def game():
                 for sparkle in sparkles:
                     draw_game_field(sparkle.row - 1, sparkle.col - 1, sparkle.row + 1, sparkle.col + 1)
 
-            if result != GAME_CONTINUE:
+            if result == GAME_OVER:
+                break
+
+            if result == PLAYER_WIN:
+                level += 1
                 break
 
             clock.tick(FPS)
