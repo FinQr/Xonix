@@ -35,29 +35,29 @@ class Board:
             self.player.row = new_row
             self.player.col = new_col
 
-        # Проверяем условие поражения - игрок столкнулся с врагом, либо игрок столкнулся с треком
-        if self.is_collision():
-            self.player.row = old_row
-            self.player.col = old_col
-            return GAME_OVER
+            # Проверяем условие поражения - игрок столкнулся с врагом, либо игрок столкнулся с треком
+            if self.is_collision():
+                self.player.row = old_row
+                self.player.col = old_col
+                return GAME_OVER
 
-        # Отслеживаем создание трека
-        if self.cells[old_row][old_col] == FRONT_CELL:
-            self.cells[old_row][old_col] = TRACK_CELL
+            # Отслеживаем создание трека
+            if self.cells[old_row][old_col] == FRONT_CELL:
+                self.cells[old_row][old_col] = TRACK_CELL
 
-        # Проверяем завершение создания трека и условие победы
-        if self.cells[old_row][old_col] == TRACK_CELL and self.cells[new_row][new_col] == BACK_CELL:
-            # Удаляем трек
-            self.remove_track()
-            # Удаляем все области, кроме самой большой
-            self.remove_minimal_areas()
-            # Устанавливаем признак необходимости полной отрисовки поля
-            self.need_redraw_all = True
-            # Подсчитываем текущую площадь поля
-            current_area = self.calc_area()
-            # Если текущая площадь составляет менее четверти от исходной - игрок победил
-            if (current_area / self.begin_area) < 0.25:
-                return PLAYER_WIN
+            # Проверяем завершение создания трека и условие победы
+            if self.cells[old_row][old_col] == TRACK_CELL and self.cells[new_row][new_col] == BACK_CELL:
+                # Удаляем трек
+                self.remove_track()
+                # Удаляем все области, кроме самой большой
+                self.remove_minimal_areas()
+                # Устанавливаем признак необходимости полной отрисовки поля
+                self.need_redraw_all = True
+                # Подсчитываем текущую площадь поля
+                current_area = self.calc_area()
+                # Если текущая площадь составляет менее четверти от исходной - игрок победил
+                if (current_area / self.begin_area) < 0.25:
+                    return PLAYER_WIN
 
         # Смещаем врагов
         for sparkle in self.sparkles:
@@ -87,8 +87,8 @@ class Board:
                 sparkle.delta_row *= (-1)
                 sparkle.delta_col *= (-1)
 
-            sparkle.row = new_row
-            sparkle.col = new_col
+            sparkle.row = sparkle.row + sparkle.delta_row
+            sparkle.col = sparkle.col + sparkle.delta_col
 
         # Возвращаем признак продолжения игры
         return GAME_CONTINUE
