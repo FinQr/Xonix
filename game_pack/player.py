@@ -1,4 +1,4 @@
-from params import *
+from game_pack.params import *
 
 
 class Player:

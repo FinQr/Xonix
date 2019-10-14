@@ -1,8 +1,8 @@
 import pygame
-from player import Player
-from sparkle import Sparkle
-from board import Board
-from params import *
+from game_pack.player import Player
+from game_pack.sparkle import Sparkle
+from game_pack.board import Board
+from game_pack.params import *
 from pygame.locals import K_DOWN, K_UP, K_LEFT, K_RIGHT
 
 # Игрок
