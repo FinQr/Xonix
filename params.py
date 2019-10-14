@@ -19,6 +19,7 @@ BACK_CELL = 0
 FRONT_CELL = 1
 PLAYER_CELL = 2
 SPARKLE_CELL = 3
+TRACK_CELL = 4
 
 # Цвета фона
 COLOR_BACK_1 = (50, 50, 50)
@@ -31,6 +32,9 @@ COLOR_FRONT_2 = (0, 110, 210)
 # Цвет игрока
 COLOR_PLAYER = (255, 20, 20)
 
+# Цвет трека
+COLOR_TRACK = (50, 200, 50)
+
 # Цвет врагов
 COLOR_SPARKLE = (245, 245, 245)
 
@@ -40,3 +44,8 @@ LEFT = 'left'
 RIGHT = 'right'
 UP = 'top'
 DOWN = 'down'
+
+# Состояния игры
+GAME_CONTINUE = 'game continue'
+GAME_OVER = 'game over'
+PLAYER_WIN = 'player win'
