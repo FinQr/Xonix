@@ -24,6 +24,11 @@ class Board:
         # Устанавливаем признак необходимости полной отрисовки поля
         self.need_redraw_all = False
 
+    def get_current_state(self):
+        # Создаем копию текущего состояния ячеек
+        return [row[:] for row in self.cells]
+    
+
     # Метод смещает игрока и врагов
     def next_positions(self):
         # Смещаем игрока
@@ -46,7 +51,7 @@ class Board:
                 self.cells[old_row][old_col] = TRACK_CELL
 
             # Проверяем завершение создания трека и условие победы
-            if self.cells[old_row][old_col] == TRACK_CELL and self.cells[new_row][new_col] == BACK_CELL:
+            if self.cells[old_row][old_col] == TRACK_CELL and (self.cells[new_row][new_col] == BACK_CELL or self.cells[new_row][new_col] == IMAGE_CELL):
                 # Удаляем трек
                 self.remove_track()
                 # Удаляем все области, кроме самой большой
@@ -72,18 +77,21 @@ class Board:
             if (new_row == self.player.row and new_col == self.player.col) or p2 == TRACK_CELL:
                 return GAME_OVER
 
-            # Отскок от внешенего угла
-            if p1 != BACK_CELL and p2 == BACK_CELL and p3 != BACK_CELL:
+            # Отскок от внешнего угла
+            if (p1 != BACK_CELL and p1 != IMAGE_CELL) and (p2 == BACK_CELL or p2 == IMAGE_CELL) and (p3 != BACK_CELL and p3 != IMAGE_CELL):
                 sparkle.delta_row *= (-1)
                 sparkle.delta_col *= (-1)
+
             # Отскок от горизонтальной линии
-            if p1 != BACK_CELL and p2 == BACK_CELL and p3 == BACK_CELL:
+            if (p1 != BACK_CELL and p1 != IMAGE_CELL) and (p2 == BACK_CELL or p2 == IMAGE_CELL) and (p3 == BACK_CELL or p3 == IMAGE_CELL):
                 sparkle.delta_row *= (-1)
+
             # Отскок от вертикальной линии
-            if p1 == BACK_CELL and p2 == BACK_CELL and p3 != BACK_CELL:
+            if (p1 == BACK_CELL or p1 == IMAGE_CELL) and (p2 == BACK_CELL or p2 == IMAGE_CELL) and (p3 != BACK_CELL and p3 != IMAGE_CELL):
                 sparkle.delta_col *= (-1)
+
             # Отскок от внутреннего угла
-            if p1 == BACK_CELL and p2 == BACK_CELL and p3 == BACK_CELL:
+            if (p1 == BACK_CELL or p1 == IMAGE_CELL) and (p2 == BACK_CELL or p2 == IMAGE_CELL) and (p3 == BACK_CELL or p3 == IMAGE_CELL):
                 sparkle.delta_row *= (-1)
                 sparkle.delta_col *= (-1)
 
@@ -163,7 +171,7 @@ class Board:
             for row in range(0, ROWS_COUNT):
                 for col in range(0, COLS_COUNT):
                     if self.cells[row][col] == paint:
-                        self.cells[row][col] = BACK_CELL
+                        self.cells[row][col] = IMAGE_CELL
 
         # Удаляем остатки краски
         for row in range(0, ROWS_COUNT):
@@ -176,7 +184,7 @@ class Board:
         for row in range(0, ROWS_COUNT):
             for col in range(0, COLS_COUNT):
                 if self.cells[row][col] == TRACK_CELL:
-                    self.cells[row][col] = BACK_CELL
+                    self.cells[row][col] = IMAGE_CELL
 
     # Метод возвращает содержимое ячейки для отрисовки
     def get_cell_content_for_draw(self, row, col):
