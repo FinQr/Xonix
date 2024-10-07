@@ -3,7 +3,8 @@ from game_pack.player import Player
 from game_pack.sparkle import Sparkle
 from game_pack.board import Board
 from game_pack.params import *
-from pygame.locals import K_DOWN, K_UP, K_LEFT, K_RIGHT
+from game_pack.menu import Menu
+from pygame.locals import K_DOWN, K_UP, K_LEFT, K_RIGHT, K_ESCAPE
 
 # Игрок
 player = None
@@ -20,7 +21,7 @@ sc = None
 # Загрузка изображения фона
 background_image = pygame.image.load("Antichnost.jpg")
 
-def game():
+def game(Menu):
     global player, sparkles, board, sc
 
     pygame.init()
@@ -41,7 +42,7 @@ def game():
 
         # Создаем нового игрока
         player = Player()
-
+        menu = Menu
         # Создаем врагов
         sparkles = []
         for i in range(0, level):
@@ -74,6 +75,14 @@ def game():
                         player.set_dir(UP)
                     elif event.key == K_DOWN:
                         player.set_dir(DOWN)
+                    elif event.key == K_ESCAPE:
+                        flag = menu.show_pause()
+                        # Если вернулось false начинаем игру заново
+                        if(flag == False):
+                            game(menu)
+                            return
+                        draw_game_field(width, height, min_col, min_row)
+
             # Смещаем игрока и врагов
             result = board.next_positions()
             
