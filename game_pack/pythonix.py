@@ -4,7 +4,7 @@ from game_pack.sparkle import Sparkle
 from game_pack.board import Board
 from game_pack.params import *
 from game_pack.menu import Menu
-from pygame.locals import K_DOWN, K_UP, K_LEFT, K_RIGHT, K_ESCAPE
+from pygame.locals import K_DOWN, K_UP, K_LEFT, K_RIGHT, K_ESCAPE, K_w, K_a, K_s, K_d
 
 # Игрок
 player = None
@@ -31,7 +31,7 @@ def game(Menu):
     # Инициализация шрифта
     font = pygame.font.Font(None, 36)
 
-    timer_interval = 30 # 30 секунд
+    current_time = 0
 
     # Текущий уровень
     level = 1
@@ -59,21 +59,19 @@ def game(Menu):
         draw_game_field(width, height, min_col, min_row)
         
 
-        current_time = timer_interval  # Сброс времени на начало уровня
-
         while True:
             events = pygame.event.get()
             for event in events:
                 if event.type == pygame.QUIT:
                     exit(0)
                 if event.type == pygame.KEYDOWN:
-                    if event.key == K_LEFT:
+                    if event.key == K_LEFT or event.key == K_a:
                         player.set_dir(LEFT)
-                    elif event.key == K_RIGHT:
+                    elif event.key == K_RIGHT or event.key == K_d:
                         player.set_dir(RIGHT)
-                    elif event.key == K_UP:
+                    elif event.key == K_UP or event.key == K_w:
                         player.set_dir(UP)
-                    elif event.key == K_DOWN:
+                    elif event.key == K_DOWN or event.key == K_s:
                         player.set_dir(DOWN)
                     elif event.key == K_ESCAPE:
                         flag = menu.show_pause()
@@ -87,12 +85,8 @@ def game(Menu):
             result = board.next_positions()
             
             # Обновляем текущее время
-            current_time -= (clock.get_time() / 1000)  # Уменьшаем время на время, прошедшее с последнего кадра
-
-            # Проверяем, истекло ли время
-            if current_time <= 0:
-                break  # Выход из внутреннего цикла для перезапуска уровня
-
+            current_time += (clock.get_time() / 1000)
+            
             # Если произошло удаление областей - полностью перерисовываем поле
             # В противном случае - перерисовываем только игрока и врагов
             if board.need_redraw_all:
@@ -107,7 +101,7 @@ def game(Menu):
                     draw_game(sparkle.row - 1, sparkle.col - 1, sparkle.row + 1, sparkle.col + 1)
             
             # Закрашиваем область, где отображается время (чёрным цветом)
-            pygame.draw.rect(sc, (0, 0, 0), (SCREEN_W - 150, 10, 150, 30))
+            pygame.draw.rect(sc, (0, 0, 0), (SCREEN_W - 150, 5, 150, 30))
 
             # Создаем текст для отображения времени
             time_text = font.render(f"Time: {int(current_time)}", True, (255, 255, 255))  # Белый цвет текста
@@ -120,7 +114,6 @@ def game(Menu):
 
             if result == PLAYER_WIN:
                 level += 1
-                timer_interval += 30
                 break
             
             # Обновляем экран

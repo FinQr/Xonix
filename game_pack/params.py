@@ -14,7 +14,7 @@ SCREEN_W = CELL_SIZE * COLS_COUNT
 SCREEN_H = CELL_SIZE * ROWS_COUNT
 
 # Ширина границы
-BORDER = 8
+BORDER = 5
 
 # Маркеры содержимого ячеек
 BACK_CELL = 0
