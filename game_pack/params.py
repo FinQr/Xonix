@@ -24,6 +24,11 @@ SPARKLE_CELL = 3
 TRACK_CELL = 4
 IMAGE_CELL = 5
 
+# Определение цветов
+WHITE = (245, 245, 245)
+BLACK = (0, 0, 0)
+GRAY = (100, 100, 100)
+GREEN = (70, 250, 8)
 
 # Цвета фона
 COLOR_BACK_1 = (38, 40, 44)

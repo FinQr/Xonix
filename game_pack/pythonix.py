@@ -36,7 +36,7 @@ def game(Menu):
     # Текущий уровень
     level = 1
 
-    while True:
+    while level <= 4:
         # Формируем заголовок окна
         pygame.display.set_caption('Xonix. Level - ' + str(level))
 
@@ -76,9 +76,11 @@ def game(Menu):
                     elif event.key == K_ESCAPE:
                         flag = menu.show_pause()
                         # Если вернулось false начинаем игру заново
-                        if(flag == False):
+                        if(flag == "restart"):
                             game(menu)
                             return
+                        elif(flag == "exit_to_menu"):
+                            return flag
                         draw_game_field(width, height, min_col, min_row)
 
             # Смещаем игрока и врагов
@@ -109,8 +111,8 @@ def game(Menu):
             # Отображаем текст на экране
             sc.blit(time_text, (SCREEN_W - 150, 10))  # Позиция текста (10, 10)
 
-            if result == GAME_OVER:
-                break
+            # if result == GAME_OVER:
+            #     break
 
             if result == PLAYER_WIN:
                 level += 1
@@ -119,6 +121,8 @@ def game(Menu):
             # Обновляем экран
             pygame.display.flip()
             clock.tick(FPS)
+    # После завершения 4 уровней выводим сообщение о победе
+    victory_screen(font, current_time)
 
 def draw_game_field(width, height, min_col, min_row):
     
@@ -198,3 +202,34 @@ def get_front_area(board):
     height = (max_row - min_row + 1) * CELL_SIZE
     print(width, height)
     return width, height, min_col, min_row
+# Экран победы
+def victory_screen(font, total_time):
+    # Очищаем экран
+    sc.fill(BLACK)
+    victory_text = font.render("Победа!", True, WHITE)
+    time_text = font.render(f"Время прохождения: {int(total_time)} сек", True, WHITE)
+    
+    sc.blit(victory_text, (SCREEN_W // 2 - victory_text.get_width() // 2, SCREEN_H // 2 - 40))
+    sc.blit(time_text, (SCREEN_W // 2 - time_text.get_width() // 2, SCREEN_H // 2 + 10))
+    
+   # Шрифт для кнопки
+    button_font = pygame.font.Font(None, 24)
+    
+    # Рисуем кнопку "Выйти в меню"
+    button_rect = pygame.Rect(30, 25, 200, 50)  # Позиция и размер кнопки
+    pygame.draw.rect(sc, (50, 200, 50), button_rect)  # Заливка кнопки цветом #32С832
+    button_text = button_font.render("Выйти в меню", True, (38, 40, 44))
+    sc.blit(button_text, (button_rect.x + (button_rect.width - button_text.get_width()) // 2, 
+                          button_rect.y + (button_rect.height - button_text.get_height()) // 2))
+    
+    pygame.display.flip()
+    
+    # Ожидание нажатия на кнопку
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                exit(0)
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if button_rect.collidepoint(event.pos) or event.key == pygame.K_RETURN:
+                    return  # Выход в меню
+        pygame.time.delay(10)
