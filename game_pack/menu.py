@@ -4,7 +4,7 @@ from game_pack.params import *
 
 class Menu:
     # Определение цветов
-    WHITE = (255, 255, 255)
+    WHITE = (245, 245, 245)
     BLACK = (0, 0, 0)
     GRAY = (100, 100, 100)
     GREEN = (70, 250, 8)
