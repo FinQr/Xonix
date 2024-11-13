@@ -83,7 +83,7 @@ class Menu:
                             return "exit_to_menu"
 
             self.window.fill(WHITE)
-            self.draw_text(self.window, 'Пауза', self.font, BLACK, SCREEN_W // 2 - 100, 100)
+            self.draw_text(self.window, 'Пауза', self.font, BLACK, SCREEN_W // 2 - 50, 100)
 
             # Определение и отрисовка кнопок
             continue_button = pygame.Rect(SCREEN_W // 2 - 100, 250, 200, 50)

@@ -149,29 +149,19 @@ class Board:
                     # Вносим краску и площадь в словарь закрашенных областей
                     paint_areas[current_area] = paint
 
-        # Ищем краску, которой закрашена самая большая площадь
-        max_area_paint = paint_areas[max(paint_areas.keys())]
+        
 
         # Перебираем краски и удаляем закрашенные ими области
-        for paint in paint_areas.values():
-            # Пропускаем область с наибольшей площадью
-            if paint == max_area_paint:
-                continue
+        for area, paint in paint_areas.items():
+        # Проверяем, есть ли враги в области
+            enemy_found = any(self.cells[sparkle.row][sparkle.col] == paint for sparkle in self.sparkles)
 
-            # Пропускаем область, если в ней есть враги
-            enemy_found = False
-            for sparkle in self.sparkles:
-                if self.cells[sparkle.row][sparkle.col] == paint:
-                    enemy_found = True
-                    break
-            if enemy_found:
-                continue
-
-            # Удаляем область
-            for row in range(0, ROWS_COUNT):
-                for col in range(0, COLS_COUNT):
-                    if self.cells[row][col] == paint:
-                        self.cells[row][col] = IMAGE_CELL
+            # Удаляем область, если в ней нет врагов
+            if not enemy_found:
+                for row in range(ROWS_COUNT):
+                    for col in range(COLS_COUNT):
+                        if self.cells[row][col] == paint:
+                            self.cells[row][col] = IMAGE_CELL
 
         # Удаляем остатки краски
         for row in range(0, ROWS_COUNT):
