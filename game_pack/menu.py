@@ -9,6 +9,7 @@ class Menu:
         pygame.font.init()
         self.font = pygame.font.Font(None, 48)
         self.button_font = pygame.font.Font(None, 24)
+        self.txt_font = pygame.font.Font(None, 24)
 
         # Индекс текущей кнопки
         self.current_option = 0
@@ -118,11 +119,11 @@ class Menu:
             self.draw_text(self.window, 'Назад', self.button_font, (COLOR_BACK_1), 70, 18)
 
             # Текстовый блок с описанием игры
-            text_box = pygame.Rect(200, 200, 500, 200)
+            text_box = pygame.Rect(100, 200, 620, 200)
             pygame.draw.rect(self.window, (50, 200, 50), text_box)  # Цвет заливки #32C832
-            game_info = "Эта игра разработана для демонстрации навыков.\nУправление осуществляется стрелками и Enter."
+            game_info = """Xonix — это увлекательная аркадная игра, в которой игрок управляет\nперсонажем, стремящимся захватить как можно больше территории на\nигровом поле. Ваша задача — обойти врагов и замкнуть участки, чтобы\nувеличить свою территорию. Чтобы пройти уровень, вам необходимо\nзахватить заданный процент территории, избегая при этом столкновений\nс врагами. Игра состоит из нескольких уровней, каждый из которых\nстановится все сложнее. Управление персонажем происходит с помощью\nклавиш WASD: W – вверх, A – влево, S – вниз, D – вправо. """
             text_lines = game_info.split("\n")
             for i, line in enumerate(text_lines):
-                self.draw_text(self.window, line, self.button_font, (COLOR_BACK_1), 210, 220 + i * 30)
+                self.draw_text(self.window, line, self.txt_font, (COLOR_BACK_1), 110, 220 + i * 20)
 
             pygame.display.update()

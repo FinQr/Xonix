@@ -6,10 +6,10 @@ def main():
 
     # Запускаем главное меню и проверяем, что выбрал пользователь
     while True:
-        choice = menu.show_menu()  # Предположим, что show_menu возвращает выбор пользователя
+        choice = menu.show_menu()
 
         if choice == "start_game":
-            result = game(menu)  # Запускаем игру и получаем результат паузы
+            result = game(menu)
             if result == "exit_to_menu":
                 continue  # Вернуться в меню
         elif choice == "exit":

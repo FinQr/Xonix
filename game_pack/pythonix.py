@@ -53,8 +53,8 @@ def game(Menu):
 
         width, height, min_col, min_row = get_front_area(board)
         
-        # # Отрисовываем фон
-        # sc.blit(background_image, (10, 10))
+        # Отрисовываем фон
+        sc.blit(background_image, (10, 10))
         # Отрисовываем игровое поле полностью
         draw_game_field(width, height, min_col, min_row)
         
@@ -111,11 +111,22 @@ def game(Menu):
             # Отображаем текст на экране
             sc.blit(time_text, (SCREEN_W - 150, 10))  # Позиция текста (10, 10)
 
-            # if result == GAME_OVER:
-            #     break
+            if result == GAME_OVER:
+                level = 1
+                current_time = 0
+                break
 
             if result == PLAYER_WIN:
                 level += 1
+                # Очищаем поверхность для отрисовки
+                sc.fill(COLOR_BACK_1)  # Полностью прозрачная поверхность
+                # Отрисовываем фон
+                sc.blit(pygame.transform.scale(background_image, (width, height)), (min_col * CELL_SIZE, min_row * CELL_SIZE))
+                # Отрисовываем фон
+                pygame.display.flip()
+                
+                # Задержка на 2 секунды
+                pygame.time.delay(2000)
                 break
             
             # Обновляем экран
