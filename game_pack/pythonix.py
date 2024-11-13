@@ -18,9 +18,13 @@ board = None
 # Поверхность отрисовки
 sc = None
 
-# Загрузка изображения фона
-background_image = pygame.image.load("Antichnost.jpg")
-
+# Загрузка изображений фона для каждого уровня
+background_images = {
+    1: pygame.image.load("im1.jpg"),
+    2: pygame.image.load("im2.jpg"),
+    3: pygame.image.load("im3.jpg"),
+    4: pygame.image.load("im4.jpg"),
+}
 def game(Menu):
     global player, sparkles, board, sc
 
@@ -54,9 +58,9 @@ def game(Menu):
         width, height, min_col, min_row = get_front_area(board)
         
         # Отрисовываем фон
-        sc.blit(background_image, (10, 10))
+        sc.blit(background_images[level], (10, 10))
         # Отрисовываем игровое поле полностью
-        draw_game_field(width, height, min_col, min_row)
+        draw_game_field(width, height, min_col, min_row, level)
         
 
         while True:
@@ -81,7 +85,7 @@ def game(Menu):
                             return
                         elif(flag == "exit_to_menu"):
                             return flag
-                        draw_game_field(width, height, min_col, min_row)
+                        draw_game_field(width, height, min_col, min_row, level)
 
             # Смещаем игрока и врагов
             result = board.next_positions()
@@ -92,7 +96,7 @@ def game(Menu):
             # Если произошло удаление областей - полностью перерисовываем поле
             # В противном случае - перерисовываем только игрока и врагов
             if board.need_redraw_all:
-                draw_game_field(width, height, min_col, min_row)
+                draw_game_field(width, height, min_col, min_row, level)
                 board.need_redraw_all = False
             else:
                 # Отрисовываем игрока
@@ -117,14 +121,14 @@ def game(Menu):
                 break
 
             if result == PLAYER_WIN:
-                level += 1
+                
                 # Очищаем поверхность для отрисовки
                 sc.fill(COLOR_BACK_1)  # Полностью прозрачная поверхность
                 # Отрисовываем фон
-                sc.blit(pygame.transform.scale(background_image, (width, height)), (min_col * CELL_SIZE, min_row * CELL_SIZE))
+                sc.blit(pygame.transform.scale(background_images[level], (width, height)), (min_col * CELL_SIZE, min_row * CELL_SIZE))
                 # Отрисовываем фон
                 pygame.display.flip()
-                
+                level += 1
                 # Задержка на 2 секунды
                 pygame.time.delay(2000)
                 break
@@ -135,10 +139,10 @@ def game(Menu):
     # После завершения 4 уровней выводим сообщение о победе
     victory_screen(font, current_time)
 
-def draw_game_field(width, height, min_col, min_row):
+def draw_game_field(width, height, min_col, min_row, level):
     
     # Отрисовываем фон
-    sc.blit(pygame.transform.scale(background_image, (width, height)), (min_col * CELL_SIZE, min_row * CELL_SIZE))
+    sc.blit(pygame.transform.scale(background_images[level], (width, height)), (min_col * CELL_SIZE, min_row * CELL_SIZE))
 
 
     # Очищаем поверхность для отрисовки
