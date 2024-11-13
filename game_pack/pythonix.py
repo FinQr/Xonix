@@ -244,7 +244,7 @@ def victory_screen(font, total_time):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit(0)
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                if button_rect.collidepoint(event.pos) or event.key == pygame.K_RETURN:
-                    return  # Выход в меню
+            elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        return  # Выход в меню
         pygame.time.delay(10)
