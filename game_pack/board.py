@@ -49,6 +49,8 @@ class Board:
             # Отслеживаем создание трека
             if self.cells[old_row][old_col] == FRONT_CELL:
                 self.cells[old_row][old_col] = TRACK_CELL
+            if self.cells[old_row][old_col] == IMAGE_CELL:
+                self.need_redraw_all = True
 
             # Проверяем завершение создания трека и условие победы
             if self.cells[old_row][old_col] == TRACK_CELL and (self.cells[new_row][new_col] == BACK_CELL or self.cells[new_row][new_col] == IMAGE_CELL):
@@ -198,7 +200,6 @@ class Board:
     def is_collision(self): 
         for sparkle in self.sparkles:
             if self.cells[self.player.row][self.player.col] == FRONT_CELL:
-                print(self.cells[self.player.row][self.player.col])
                 if sparkle.row == self.player.row and sparkle.col == self.player.col:
                     return True
             if self.cells[sparkle.row][sparkle.col] == TRACK_CELL:
