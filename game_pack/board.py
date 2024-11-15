@@ -195,10 +195,12 @@ class Board:
         return area
 
     # Метод проверяет столкновление игрока с врагом, врагов с треком и игрока с треком
-    def is_collision(self):
+    def is_collision(self): 
         for sparkle in self.sparkles:
-            if sparkle.row == self.player.row and sparkle.col == self.player.col:
-                return True
+            if self.cells[self.player.row][self.player.col] == FRONT_CELL:
+                print(self.cells[self.player.row][self.player.col])
+                if sparkle.row == self.player.row and sparkle.col == self.player.col:
+                    return True
             if self.cells[sparkle.row][sparkle.col] == TRACK_CELL:
                 return True
             if self.cells[self.player.row][self.player.col] == TRACK_CELL:

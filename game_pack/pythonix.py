@@ -20,10 +20,10 @@ sc = None
 
 # Загрузка изображений фона для каждого уровня
 background_images = {
-    1: pygame.image.load("im1.jpg"),
-    2: pygame.image.load("im2.jpg"),
-    3: pygame.image.load("im3.jpg"),
-    4: pygame.image.load("im4.jpg"),
+    1: pygame.image.load("images/im1.jpg"),
+    2: pygame.image.load("images/im2.jpg"),
+    3: pygame.image.load("images/im3.jpg"),
+    4: pygame.image.load("images/im4.jpg"),
 }
 def game(Menu):
     global player, sparkles, board, sc
