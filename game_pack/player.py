@@ -28,24 +28,3 @@ class Player:
         else:
             self.current_dir = new_dir
             self.delta_row, self.delta_col = self.dirs_offsets[new_dir]
-
-
-    def draw(self, surface):
-        # Определяем размеры и цвет игрока
-        player_size = CELL_SIZE  # Размер одного прямоугольника
-        color = COLOR_PLAYER  # Цвет игрока
-
-        # Отрисовываем 4 прямоугольника, образующих квадрат
-        # Прямоугольники будут расположены в виде 2x2
-        for i in range(2):
-            for j in range(2):
-                pygame.draw.rect(
-                    surface,
-                    color,
-                    (
-                        (self.col + j) * player_size,
-                        (self.row + i) * player_size,
-                        player_size,
-                        player_size
-                    )
-                )
